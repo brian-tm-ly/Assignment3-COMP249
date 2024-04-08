@@ -17,8 +17,9 @@ public class Driver {
         list.addAtHead("pear");
         list.addAtHead("plum");
         list.addAtHead("raspberry");
+        list.addAtEnd("strawberry");
         list.display();
-        //System.out.println(list.remove("apple"));
+        // System.out.println(list.remove("apple"));
         // System.out.println("\nAfter removing word:");
         // list.display();
         // System.out.println("\nAfter sorting:");
@@ -30,5 +31,8 @@ public class Driver {
         // list.sort();
         // System.out.println("\nAfter sorting:");
         // list.display();
+        System.out.println("\nAfter cloning:");
+        SinglyLinkedList copy = list.clone();
+        copy.display();
     }
 }

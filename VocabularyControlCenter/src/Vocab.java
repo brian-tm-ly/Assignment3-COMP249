@@ -4,6 +4,21 @@ public class Vocab {
     //Single linked list to store words within vocab objects
     private SinglyLinkedList words;
 
+    public Vocab() {
+        topic = "";
+        words = new SinglyLinkedList();
+    }
+
+    public Vocab(String topic) {
+        this.topic = topic;
+        words = new SinglyLinkedList();
+    }
+
+    public Vocab(String topic, SinglyLinkedList words) {
+        this.topic = topic;
+        this.words = words.clone(); //create a deep copy of the words list
+    }
+
     public String getTopic() {
         return topic;
     }
@@ -22,6 +37,16 @@ public class Vocab {
 
     public void modifyWord(String oldWord, String newWord) {
         words.modify(oldWord, newWord);
+    }
+
+    @Override
+    public String toString() {
+        return "Topic: " + topic + "\n";
+    }
+
+    @Override
+    public Vocab clone() {
+        return new Vocab(topic, words.clone()); //return a deep copy of the vocab object
     }
 
 }

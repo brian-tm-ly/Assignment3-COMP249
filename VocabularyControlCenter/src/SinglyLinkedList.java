@@ -42,6 +42,28 @@ public class SinglyLinkedList {
 
     }
 
+    public void addAtEnd(String newWord) {
+        if (head == null) {
+            addAtHead(newWord);
+        } else {
+            //Check if word already exists in the list
+            Node position = head;
+            while (position.next != null) {
+                if (position.word.equals(newWord)) {
+                    System.out.println("Sorry, the word \'" + newWord + "\' is already listed.");
+                    return;
+                }
+                //if word is not found, move to next node
+                position = position.next;
+
+            }
+            //Add word to end of list
+            Node newNode = new Node(newWord, null);
+            position.next = newNode;
+            count++;
+        }
+    }
+
     //Modify a word in the list
     public void modify(String oldWord, String newWord) {
         if (head == null) {
@@ -134,6 +156,17 @@ public class SinglyLinkedList {
             position = position.next; //Move to next node inside outer loop
         }
 
+    }
+
+    @Override
+    public SinglyLinkedList clone() {
+        SinglyLinkedList copy = new SinglyLinkedList();
+        Node position = head;
+        while (position != null) {
+            copy.addAtEnd(position.word);
+            position = position.next;
+        }
+        return copy;
     }
 
     //Private inner class to create nodes
