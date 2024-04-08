@@ -8,6 +8,22 @@ public class SinglyLinkedList {
 
     }
 
+    public Node getHead() {
+        return head;
+    }
+
+    public void setHead(Node head) {
+        this.head = head;
+    }
+
+    public int size() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     //Add word at beginning of list
     public void addAtHead(String newWord) {
         //Check if word already exists in the list
@@ -88,8 +104,9 @@ public class SinglyLinkedList {
             int columnCount = 0; //counter to display 4 words per row
             int wordNum = 1; //counter to display the word number in the list
             while (position != null) {
-                //Display 4 words per row with a column width of 20 characters
-                System.out.printf("%-20s", wordNum++ + ": " + position.word);
+                //Display 4 words per row as formatted in the sample output
+                System.out.printf("%2d", wordNum++);
+                System.out.printf("%-20s", ": " + position.word);
                 position = position.next;
                 columnCount++;
                 //If 4 words have been displayed or the end of the list is reached, move to the next line
@@ -118,6 +135,8 @@ public class SinglyLinkedList {
         }
 
     }
+
+    //Private inner class to create nodes
 
     private class Node {
         private String word;
