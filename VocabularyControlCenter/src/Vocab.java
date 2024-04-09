@@ -19,6 +19,10 @@ public class Vocab {
         this.words = words.clone(); //create a deep copy of the words list
     }
 
+    public SinglyLinkedList getWords() {
+        return this.words;
+    }
+
     public String getTopic() {
         return topic;
     }

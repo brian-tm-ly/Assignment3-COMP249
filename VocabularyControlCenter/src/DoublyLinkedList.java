@@ -1,7 +1,7 @@
 public class DoublyLinkedList {
     private Node head;
     private Node tail;
-    private int count; //to count the number of topics in the list
+    private int count; // to count the number of topics in the list
 
     public DoublyLinkedList() {
         head = null;
@@ -9,43 +9,40 @@ public class DoublyLinkedList {
         count = 0;
     }
 
-    public void addAtHead(String newTopic) {
-        Node oldHead = head; //store the current head
+    public void addAtHead(Vocab newVocab) {
+        Node oldHead = head; // store the current head
         Node position = head;
-        //Check if topic already exists in the list
+        // Check if topic already exists in the list
         while (position != null) {
-            if (position.vocab.getTopic().equals(newTopic)) {
-                System.out.println("Sorry, the topic \'" + newTopic + "\' is already listed.");
+            if (position.vocab.getTopic().equals(newVocab.getTopic())) {
+                System.out.println("Sorry, the topic \'" + newVocab.getTopic() + "\' is already listed.");
                 return;
             }
             position = position.next;
         }
-        //Add topic to list
-        Vocab newVocab = new Vocab(newTopic);
+        // Add topic to list
         head = new Node(newVocab, null, head);
 
-        if (tail == null) { //if list is empty
+        if (tail == null) { // if list is empty
             tail = head;
         } else {
-            oldHead.prev = head; //set the previous node of the old head to the new head
+            oldHead.prev = head; // set the previous node of the old head to the new head
         }
         count++;
     }
 
-    public void addAtTail(String newTopic) {
+    public void addAtTail(Vocab newVocab) {
         Node position = head;
-        //Check if topic already exists in the list
+        // Check if topic already exists in the list
         while (position != null) {
-            if (position.vocab.getTopic().equals(newTopic)) {
-                System.out.println("Sorry, the topic \'" + newTopic + "\' is already listed.");
+            if (position.vocab.getTopic().equals(newVocab.getTopic())) {
+                System.out.println("Sorry, the topic \'" + newVocab.getTopic() + "\' is already listed.");
                 return;
             }
             position = position.next;
         }
 
-        //Add topic to list
-        Vocab newVocab = new Vocab(newTopic);
-
+        // Add topic to list
         if (tail == null) {
             head = new Node(newVocab, null, null);
             tail = head;
@@ -57,23 +54,22 @@ public class DoublyLinkedList {
         count++;
     }
 
-    public void addBefore(String topicReference, String newTopic) {
+    public void addBefore(Vocab vocabReference, Vocab newVocab) {
         if (head == null) {
             return;
-        } else if (head.vocab.getTopic().equals(topicReference)) {
-            addAtHead(newTopic);
+        } else if (head.vocab.getTopic().equals(vocabReference.getTopic())) {
+            addAtHead(newVocab);
         } else {
-            //Check if topic already exists in the list
+            // Check if topic already exists in the list
             Node position = head;
-            while (position != null && !(position.vocab.getTopic().equals(topicReference))) {
-                if (position.vocab.getTopic().equals(newTopic)) {
-                    System.out.println("Sorry, the topic \'" + newTopic + "\' is already listed.");
+            while (position != null && !(position.vocab.getTopic().equals(vocabReference.getTopic()))) {
+                if (position.vocab.getTopic().equals(newVocab.getTopic())) {
+                    System.out.println("Sorry, the topic \'" + newVocab.getTopic() + "\' is already listed.");
                     return;
                 }
                 position = position.next;
             }
             if (position != null) {
-                Vocab newVocab = new Vocab(newTopic);
                 Node n = new Node(newVocab, position.prev, position);
                 position.prev.next = n;
                 position.prev = n;
@@ -83,25 +79,24 @@ public class DoublyLinkedList {
 
     }
 
-    public void addAfter(String topicReference, String newTopic) {
+    public void addAfter(Vocab vocabReference, Vocab newVocab) {
         if (head == null) {
             return;
         } else {
-            //Check if topic already exists in the list
+            // Check if topic already exists in the list
             Node position = head;
-            while (position != null && !(position.vocab.getTopic().equals(topicReference))) {
-                if (position.vocab.getTopic().equals(newTopic)) {
-                    System.out.println("Sorry, the topic \'" + newTopic + "\' is already listed.");
+            while (position != null && !(position.vocab.getTopic().equals(vocabReference.getTopic()))) {
+                if (position.vocab.getTopic().equals(newVocab.getTopic())) {
+                    System.out.println("Sorry, the topic \'" + newVocab.getTopic() + "\' is already listed.");
                     return;
                 }
                 position = position.next;
             }
-            if (position != null && position.vocab.getTopic().equals(topicReference)) {
+            if (position != null && position.vocab.getTopic().equals(vocabReference.getTopic())) {
                 if (position.next == null) {
-                    addAtTail(newTopic);
+                    addAtTail(newVocab);
 
                 } else {
-                    Vocab newVocab = new Vocab(newTopic);
                     Node newNode = new Node(newVocab, position.next, position);
                     position.next.prev = newNode;
                     position.next = newNode;
@@ -119,12 +114,37 @@ public class DoublyLinkedList {
             while (position != null && !(position.vocab.getTopic().equals(topicToRemove))) {
                 position = position.next;
             }
-            position.prev.next = position.next;
-            position.next.prev = position.prev;
+
+            if (position == head) { // if the topic to be removed is the head
+                head = position.next;
+            }
+
+            if (position.prev != null) {
+                position.prev.next = position.next;
+            }
+
+            if (position.next != null) {
+                position.next.prev = position.prev;
+            }
+
             count--;
         }
 
-        //Check if topic exists in the list
+        // Check if topic exists in the list
+    }
+
+    public void display() {
+        if (count == 0) {
+            System.out.println("The list is empty.");
+        } else {
+            Node position = head;
+
+            while (position != null) {
+                System.out.print(position.vocab);
+                position.vocab.getWords().display();
+                position = position.next;
+            }
+        }
     }
 
     private class Node {
@@ -133,7 +153,7 @@ public class DoublyLinkedList {
         private Node prev;
 
         public Node(Vocab vocab, Node prev, Node next) {
-            this.vocab = vocab.clone(); //create a deep copy of the vocab object
+            this.vocab = vocab.clone(); // create a deep copy of the vocab object
             this.next = next;
             this.prev = prev;
         }
