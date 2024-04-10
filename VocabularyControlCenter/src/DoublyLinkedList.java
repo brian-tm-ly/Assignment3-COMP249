@@ -133,16 +133,31 @@ public class DoublyLinkedList {
         // Check if topic exists in the list
     }
 
-    public void display() {
+    public void display(String topicToDisplay) {
+        if (count == 0) {
+            System.out.println("The list is empty.");
+        } else {
+            Node position = head;
+
+            while (position != null && !(position.vocab.getTopic().equals(topicToDisplay))) {
+                position = position.next;
+            }
+            System.out.print(position.vocab);
+            position.vocab.getWords().display();
+        }
+    }
+
+    public void displayTopics() {
+        int wordNum = 1;
         if (count == 0) {
             System.out.println("The list is empty.");
         } else {
             Node position = head;
 
             while (position != null) {
-                System.out.print(position.vocab);
-                position.vocab.getWords().display();
+                System.out.print(wordNum + " " + position.vocab.getTopic() + "\n");
                 position = position.next;
+                wordNum++;
             }
         }
     }

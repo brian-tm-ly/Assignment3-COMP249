@@ -6,18 +6,23 @@ public class Driver {
     public static void main(String[] args) {
 
         int choice = 0;
+        int topic = 0;
         Scanner myScanner = new Scanner(System.in);
         DoublyLinkedList vocab_List = new DoublyLinkedList();
 
         do {
             displayMenu();
             choice = myScanner.nextInt();
-
             switch (choice) {
+                case 1:
+                    pickATopic(vocab_List); 
+                    topic = myScanner.nextInt();
+                    break;
                 case 7:
                     System.out.println("Enter the name of the input file:");
                     String inputFile = myScanner.next();
-                    vocab_List = loadFile(inputFile);
+                    myScanner.nextLine();
+                    vocab_List = loadFile(inputFile, vocab_List);
                     break;
             }
         } while (choice != 0);
@@ -107,12 +112,11 @@ public class Driver {
         System.out.print("Enter Your Choice: ");
     }
 
-    public static DoublyLinkedList loadFile(String file) {
+    public static DoublyLinkedList loadFile(String file, DoublyLinkedList vocab_List) {
         Scanner sc = null;
         String line = "";
         String topic = "";
         SinglyLinkedList words = null;
-        DoublyLinkedList vocab_List = new DoublyLinkedList();
 
         try {
             sc = new Scanner(new FileInputStream(file));
@@ -144,5 +148,15 @@ public class Driver {
             System.out.println("File could not be opened.");
         }
         return vocab_List;
+    }
+
+    public static void pickATopic(DoublyLinkedList vocab_list) {
+        System.out.println("-----------------------------");
+        System.out.println("        Pick a topic");
+        System.out.println("-----------------------------");
+        vocab_list.displayTopics();
+        System.out.println("0 Exit");
+        System.out.println("-----------------------------");
+        System.out.print("Enter Your Choice: ");
     }
 }
