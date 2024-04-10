@@ -1,8 +1,43 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Driver {
     public static void main(String[] args) {
 
-        SinglyLinkedList list = new SinglyLinkedList();
+        Scanner sc = null;
+        String line = "";
+        String topic = "";
+        SinglyLinkedList words = null;        
+        DoublyLinkedList vocabList = new DoublyLinkedList();
 
+        try {
+            sc = new Scanner(new FileInputStream("A3_input_file.txt"));
+            while (sc.hasNextLine()) {
+                line = sc.nextLine().trim();
+                if (line.startsWith("#")) {
+                    
+                    if (topic != null && words != null) {
+                        Vocab vocab = new Vocab(topic, words);
+                        vocabList.addAtTail(vocab);
+                    }
+                    
+                    topic = line.substring(1);
+                    words = new SinglyLinkedList();
+                } else if (!line.equals("")) {
+                    words.addAtEnd(line);
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File could not be opened.");
+        }
+
+        vocabList.display();
+
+
+
+        SinglyLinkedList list = new SinglyLinkedList();
         list.addAtHead("apple");
         list.addAtHead("banana");
         list.addAtHead("cherry");
@@ -19,9 +54,9 @@ public class Driver {
         list.addAtHead("plum");
         list.addAtHead("raspberry");
         list.addAtEnd("strawberry");
-        //list.display();
+        // list.display();
 
-        SinglyLinkedList l1 = new SinglyLinkedList();
+        /*SinglyLinkedList l1 = new SinglyLinkedList();
         l1.addAtHead("backpack");
         l1.addAtHead("go(with/together)");
         l1.addAtHead("perfume");
@@ -45,8 +80,7 @@ public class Driver {
         dList.display();
         dList.remove(v1.getTopic());
         System.out.println("After removing:");
-        dList.display();
-
+        dList.display();*/
 
         // System.out.println(list.remove("apple"));
         // System.out.println("\nAfter removing word:");
@@ -60,9 +94,9 @@ public class Driver {
         // list.sort();
         // System.out.println("\nAfter sorting:");
         // list.display();
-        //System.out.println("\nAfter cloning:");
-        //SinglyLinkedList copy = list.clone();
-        //copy.display();
+        // System.out.println("\nAfter cloning:");
+        // SinglyLinkedList copy = list.clone();
+        // copy.display();
 
     }
 }
