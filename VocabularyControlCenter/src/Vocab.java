@@ -1,6 +1,5 @@
-import java.util.ArrayList;
-
 public class Vocab {
+
     private String topic;
     //Single linked list to store words within vocab objects
     private SinglyLinkedList words;
@@ -42,6 +41,10 @@ public class Vocab {
 
     public void modifyWord(String oldWord, String newWord) {
         words.modify(oldWord, newWord);
+    }
+
+    public void sortWords() {
+        words.sort();
     }
 
     @Override

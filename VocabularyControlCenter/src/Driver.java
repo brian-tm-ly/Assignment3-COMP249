@@ -26,6 +26,7 @@ public class Driver {
                     if (vocab_List.getCount() == 0) {
                         Vocab newVocab = enterATopic(vocab_List);
                         vocab_List.addAtHead(newVocab);
+                        vocab_List.getVocab().sortWords();
                         vocab_List.display(newVocab.getTopic());
 
                     } else {
@@ -34,6 +35,7 @@ public class Driver {
                             Vocab vocabReference = vocab_List.find(topic);
                             Vocab newVocab = enterATopic(vocab_List);
                             vocab_List.addBefore(vocabReference, newVocab);
+                            newVocab.sortWords();
                             vocab_List.display(newVocab.getTopic());
                         }
                     }
@@ -42,13 +44,15 @@ public class Driver {
                     if (vocab_List.getCount() == 0) {
                         Vocab newVocab = enterATopic(vocab_List);
                         vocab_List.addAtHead(newVocab);
+                        vocab_List.getVocab().sortWords();
                         vocab_List.display(newVocab.getTopic());
                     } else {
+                        topic = pickATopic(vocab_List);
                         if (topic != 0) {
-                            topic = pickATopic(vocab_List);
                             Vocab vocabReference = vocab_List.find(topic);
                             Vocab newVocab = enterATopic(vocab_List);
                             vocab_List.addAfter(vocabReference, newVocab);
+                            vocab_List.getVocab().sortWords();
                             vocab_List.display(newVocab.getTopic());
                         }
                     }
@@ -58,6 +62,7 @@ public class Driver {
                     if (topic != 0) {
                         Vocab vocabReference = vocab_List.find(topic);
                         vocab_List.remove(vocabReference.getTopic());
+                        vocab_List.getVocab().sortWords();
                     }
                     break;
                 case 5:
@@ -68,31 +73,38 @@ public class Driver {
                         switch (modifyChoice) {
                             case "a":
                                 System.out.println("Type a word and press Enter, or press Enter to end input.");
-                                String newWord = myScanner.nextLine();
+                                String newWord = myScanner.next();
                                 if (!newWord.isEmpty()) {
                                     vocabReference.addWord(newWord);
-                                } else {
-                                    break;
                                 }
+                                break;
                             case "r":
                                 System.out.println("Enter a word:");
-                                String wordToRemove = myScanner.nextLine();
+                                String wordToRemove = myScanner.next();
                                 vocabReference.removeWord(wordToRemove);
                                 break;
                             case "c":
                                 System.out.println("Enter the word to change: ");
-                                String oldWord = myScanner.nextLine();
+                                String oldWord = myScanner.next();
                                 System.out.println("Enter the new word: ");
-                                String wordToChange = myScanner.nextLine();
+                                String wordToChange = myScanner.next();
                                 vocabReference.modifyWord(oldWord, wordToChange);
                                 break;
                             case "0":
                                 break;
                         }
+                        vocab_List.getVocab().sortWords();
                     }
                     break;
                 case 6:
                     System.out.println("Enter a word:");
+                    String wordToFind = myScanner.next();
+                    Vocab vocabTarget = vocab_List.findWord(wordToFind);
+                    if (vocabTarget != null) {
+                        System.out.println(wordToFind + " is listed in the topic: " + vocabTarget.getTopic());
+                    } else {
+                        System.out.println("No existing topics contain the word.");
+                    }
                     break;
                 case 7:
                     System.out.println("Enter the name of the input file:");
@@ -120,75 +132,13 @@ public class Driver {
                     break;
                 case 9:
                     System.out.println("Enter the name of the output file (format input_topics_words.txt): ");
-                    
+                    String file = myScanner.next();
+                    vocab_List.saveToFile(file);
                     break;
             }
         } while (choice != 0);
 
         myScanner.close();
-
-        SinglyLinkedList list = new SinglyLinkedList();
-        list.addAtHead("apple");
-        list.addAtHead("banana");
-        list.addAtHead("cherry");
-        list.addAtHead("avocado");
-        list.addAtHead("Blueberry");
-        list.addAtHead("blackberry");
-        list.addAtHead("grape");
-        list.addAtHead("kiwi");
-        list.addAtHead("lemon");
-        list.addAtHead("mango");
-        list.addAtHead("orange");
-        list.addAtHead("peach");
-        list.addAtHead("pear");
-        list.addAtHead("plum");
-        list.addAtHead("raspberry");
-        list.addAtEnd("strawberry");
-        // list.display();
-
-        /*
-         * SinglyLinkedList l1 = new SinglyLinkedList();
-         * l1.addAtHead("backpack");
-         * l1.addAtHead("go(with/together)");
-         * l1.addAtHead("perfume");
-         * l1.addAtHead("sweatshirt");
-         * l1.addAtHead("bag");
-         * DoublyLinkedList dList = new DoublyLinkedList();
-         * Vocab v1 = new Vocab("Clothes and Accessories", l1);
-         * SinglyLinkedList l2 = new SinglyLinkedList();
-         * l2.addAtHead("gold");
-         * l2.addAtHead("orange");
-         * l2.addAtHead("silver");
-         * l2.addAtHead("black");
-         * l2.addAtHead("golden");
-         * Vocab v2 = new Vocab("Colours", l2);
-         * 
-         * v1.getWords().display();
-         * dList.addAtHead(v1);
-         * dList.display();
-         * dList.addAfter(v1, v2);
-         * System.out.println("After adding new vocab:");
-         * dList.display();
-         * dList.remove(v1.getTopic());
-         * System.out.println("After removing:");
-         * dList.display();
-         */
-
-        // System.out.println(list.remove("apple"));
-        // System.out.println("\nAfter removing word:");
-        // list.display();
-        // System.out.println("\nAfter sorting:");
-        // list.sort();
-        // list.display();
-        // list.modify("apple", "melon");
-        // System.out.println("\nAfter modifying word:");
-        // list.display();
-        // list.sort();
-        // System.out.println("\nAfter sorting:");
-        // list.display();
-        // System.out.println("\nAfter cloning:");
-        // SinglyLinkedList copy = list.clone();
-        // copy.display();
 
     }
 
@@ -276,6 +226,7 @@ public class Driver {
                 newVocab.addWord(word);
             }
         } while (!word.isEmpty());
+
         return newVocab;
     }
 
@@ -292,6 +243,7 @@ public class Driver {
         System.out.println("-----------------------------");
         System.out.print("Enter Your Choice: ");
         String modifyChoice = sc.next();
+        sc.nextLine();
         return modifyChoice;
     }
 

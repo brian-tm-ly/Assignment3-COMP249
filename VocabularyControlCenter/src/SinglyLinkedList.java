@@ -1,6 +1,5 @@
-import java.util.ArrayList;
-
 public class SinglyLinkedList {
+
     private Node head;
     private int count; //to count the number of words in the list
 

@@ -1,6 +1,7 @@
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 public class DoublyLinkedList {
     private Node head;
@@ -17,13 +18,29 @@ public class DoublyLinkedList {
         return this.count;
     }
 
+    public Vocab getVocab() {
+        return head.vocab;
+    }
+
     public void saveToFile(String file) {
         PrintWriter pw = null;
-        
         try {
             pw = new PrintWriter(new FileOutputStream(file));
+
+            Node position = head;
+            while (position != null) {
+                pw.println("#" + position.vocab.getTopic());
+                SinglyLinkedList words = position.vocab.getWords();
+                for (int i = 0; i < words.size(); i++) {
+                    String word = words.getWordAt(i);
+                    pw.println(word);
+                }
+                pw.println();
+                position = position.next;
+            }
+            pw.close();
         } catch (FileNotFoundException e) {
-            System.out.println("");
+            System.out.println("File could not be opened.");
         }
     }
 
@@ -58,10 +75,16 @@ public class DoublyLinkedList {
     public Vocab findWord(String word) {
         Node position = head;
         while (position != null) {
+            SinglyLinkedList words = position.vocab.getWords();
+            for (int i = 0; i < words.size(); i++) {
+                if (words.getWordAt(i).equals(word))
+                    return position.vocab;
+            }
             position = position.next;
         }
+        return null;
     }
-    
+
     public void addAtHead(Vocab newVocab) {
         Node oldHead = head; // store the current head
         Node position = head;
