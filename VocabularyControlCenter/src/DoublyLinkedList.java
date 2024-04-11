@@ -1,3 +1,7 @@
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.io.FileNotFoundException;
+
 public class DoublyLinkedList {
     private Node head;
     private Node tail;
@@ -9,6 +13,55 @@ public class DoublyLinkedList {
         count = 0;
     }
 
+    public int getCount() {
+        return this.count;
+    }
+
+    public void saveToFile(String file) {
+        PrintWriter pw = null;
+        
+        try {
+            pw = new PrintWriter(new FileOutputStream(file));
+        } catch (FileNotFoundException e) {
+            System.out.println("");
+        }
+    }
+
+    public ArrayList<String> startingWith(String prefix) {
+        ArrayList<String> wordsStartingWith = new ArrayList<>();
+        Node position = head;
+        while (position != null) {
+            SinglyLinkedList words = position.vocab.getWords();
+            for (int i = 0; i < words.size(); i++) {
+                String word = words.getWordAt(i);
+                if (word.startsWith(prefix)) {
+                    wordsStartingWith.add(word);
+                }
+            }
+            position = position.next;
+        }
+        return wordsStartingWith;
+    }
+
+    //Find topic in list based on topic number
+    public Vocab find(int topicChoice) {
+        Node position = head;
+        int counter = 1; // to keep track of the topic number
+        while (position != null && counter != topicChoice) {
+            position = position.next;
+            counter++;
+        }
+        return position.vocab; // return the vocab object
+
+    }
+
+    public Vocab findWord(String word) {
+        Node position = head;
+        while (position != null) {
+            position = position.next;
+        }
+    }
+    
     public void addAtHead(Vocab newVocab) {
         Node oldHead = head; // store the current head
         Node position = head;
@@ -155,7 +208,7 @@ public class DoublyLinkedList {
             Node position = head;
 
             while (position != null) {
-                System.out.print(wordNum + " " + position.vocab.getTopic() + "\n");
+                System.out.print(" " + wordNum + " " + position.vocab.getTopic() + "\n");
                 position = position.next;
                 wordNum++;
             }

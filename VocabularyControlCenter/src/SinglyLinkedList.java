@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class SinglyLinkedList {
     private Node head;
     private int count; //to count the number of words in the list
@@ -16,12 +18,29 @@ public class SinglyLinkedList {
         this.head = head;
     }
 
+    public String getWord() {
+        return head.word;
+    }
+
     public int size() {
         return count;
     }
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getWordAt(int index) {
+        Node current = head;
+        int counter = 0;
+        while (current != null) {
+            if (counter == index) {
+                return current.word; //return the word at the specified index
+            }
+            current = current.next;
+            counter++;
+        }
+        return null; //return null if index is out of bounds
     }
 
     //Add word at beginning of list
@@ -184,6 +203,10 @@ public class SinglyLinkedList {
         public Node(String word, Node next) {
             this.word = word;
             this.next = next;
+        }
+
+        public String getWord() {
+            return word;
         }
     }
 
