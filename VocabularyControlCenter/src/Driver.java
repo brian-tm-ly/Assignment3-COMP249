@@ -119,6 +119,8 @@ public class Driver {
                     }
                     break;
                 case 9:
+                    System.out.println("Enter the name of the output file (format input_topics_words.txt): ");
+                    
                     break;
             }
         } while (choice != 0);
