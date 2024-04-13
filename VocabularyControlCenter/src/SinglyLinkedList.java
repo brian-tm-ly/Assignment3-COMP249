@@ -1,34 +1,68 @@
+//Brian Ly (40028072), Valerie Nguyen (40284261)
+
+//COMP249
+//Assignment #3
+//Due April 15, 2024
+
+/**
+ * SinglyLinkedList class to create a singly linked list of words
+ * @author Brian, Valerie
+ * @version 1.0
+ * @see DoublyLinkedList
+ * @see Vocab
+ * @see Driver
+ */
 public class SinglyLinkedList {
 
     private Node head;
     private int count; //to count the number of words in the list
 
+    /**
+     * Default constructor to create an empty list
+     */
     public SinglyLinkedList() {
         head = null;
         count = 0;
 
     }
 
+    /**
+     * Getter method to get the head of the list
+     * @return Node head
+     */
     public Node getHead() {
         return head;
     }
 
+    /**
+     * Setter method to set the head of the list
+     * @param head
+     */
     public void setHead(Node head) {
         this.head = head;
     }
 
+    /**
+     * Getter method to get the word at the head of the list
+     * @return String head.word
+     */
     public String getWord() {
         return head.word;
     }
 
+    /**
+     * Getter method to get the number of words in the list
+     * @return
+     */
     public int size() {
         return count;
     }
 
-    public void setCount(int count) {
-        this.count = count;
-    }
-
+    /**
+     * Method to get the word at a specified index
+     * @param index the index of the word to get from the list
+     * @return the word at the specified index
+     */
     public String getWordAt(int index) {
         Node current = head;
         int counter = 0;
@@ -42,7 +76,10 @@ public class SinglyLinkedList {
         return null; //return null if index is out of bounds
     }
 
-    //Add word at beginning of list
+    /**
+     * Method to add a word to the head of the list
+     * @param newWord the word to add to the list
+     */
     public void addAtHead(String newWord) {
         //Check if word already exists in the list
         Node position = head;
@@ -60,6 +97,24 @@ public class SinglyLinkedList {
 
     }
 
+    /**
+     * Method to add a word to the list from a file input
+     * @param newWord the word to add to the list
+     */
+    public void addFromFile(String newWord) {
+        Node position = head;
+        while (position != null) {
+            position = position.next;
+        }
+        //Add word to list
+        head = new Node(newWord, head);
+        count++;
+    }
+
+    /**
+     * Method to add a word to the end of the list
+     * @param newWord
+     */
     public void addAtEnd(String newWord) {
         if (head == null) {
             addAtHead(newWord);
@@ -82,7 +137,11 @@ public class SinglyLinkedList {
         }
     }
 
-    //Modify a word in the list
+    /**
+     * Method to modify a word in the list with a new word
+     * @param oldWord the word to modify in the list
+     * @param newWord the new word to replace the old word
+     */
     public void modify(String oldWord, String newWord) {
         if (head == null) {
             System.out.println("There are no words associated with this topic.");
@@ -103,7 +162,11 @@ public class SinglyLinkedList {
 
     }
 
-    //Remove a word in the list
+    /**
+     * Method to remove a word from the list by word
+     * @param wordToRemove the word to remove from the list
+     * @return the word that was removed from the list
+     */
     public String remove(String wordToRemove) {
         if (head == null) {
             System.out.println("There are no words associated with this topic.");
@@ -135,7 +198,10 @@ public class SinglyLinkedList {
 
     }
 
-    //Display the list
+    /**
+     * Method to display the list of words
+     * Display 4 words per row as formatted in the sample output
+     */
     public void display() {
         if (head == null) {
             System.out.println("There are no words associated with this topic.");
@@ -158,7 +224,9 @@ public class SinglyLinkedList {
         }
     }
 
-    //Sort the list in lexicographical order
+    /**
+     * Method to sort the list of words alphabetically
+     */
     public void sort() {
         Node position = head;
         while (position != null) {
@@ -176,6 +244,10 @@ public class SinglyLinkedList {
 
     }
 
+    /**
+     * Method to clone the list of words
+     * @return a deep copy of the list of words
+     */
     @Override
     public SinglyLinkedList clone() {
         SinglyLinkedList copy = new SinglyLinkedList();
@@ -187,26 +259,32 @@ public class SinglyLinkedList {
         return copy;
     }
 
-    //Private inner class to create nodes
-
+    /**
+     * Node class to create a node object for the singly linked list
+     */
     private class Node {
         private String word;
         private Node next;
 
+        /**
+         * Default constructor to create a node with null values
+         */
         public Node() {
             word = null;
             next = null;
 
         }
 
+        /**
+         * Constructor to create a node with a word and next node
+         * @param word the word to store in the node
+         * @param next the next node in the list
+         */
         public Node(String word, Node next) {
             this.word = word;
             this.next = next;
         }
 
-        public String getWord() {
-            return word;
-        }
     }
 
 }

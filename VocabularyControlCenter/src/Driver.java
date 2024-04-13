@@ -1,3 +1,9 @@
+//Brian Ly (40028072), Valerie Nguyen (40284261)
+
+//COMP249
+//Assignment #3
+//Due April 15, 2024
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -14,88 +20,124 @@ public class Driver {
         do {
             displayMenu();
             choice = myScanner.nextInt();
+
+            // validate the user's input
+            while (choice < 0 || choice > 9) {
+                System.out.println("You must enter a number between 0-9.");
+                System.out.print("Enter Your Choice: ");
+                choice = myScanner.nextInt();
+            }
+
             switch (choice) {
+                // browse a topic
                 case 1:
-                    topic = pickATopic(vocab_List);
+                    topic = pickATopic(vocab_List, myScanner);
                     if (topic != 0) {
+                        // find the Vocab object to display
                         Vocab vocabDisplay = vocab_List.find(topic);
                         vocab_List.display(vocabDisplay.getTopic());
                     }
                     break;
+
+                // insert a new topic before another one    
                 case 2:
+                    // if vocab_list is empty, add the new topic at head
                     if (vocab_List.getCount() == 0) {
-                        Vocab newVocab = enterATopic(vocab_List);
+                        Vocab newVocab = enterATopic(vocab_List, myScanner);
                         vocab_List.addAtHead(newVocab);
                         vocab_List.getVocab().sortWords();
                         vocab_List.display(newVocab.getTopic());
-
                     } else {
-                        topic = pickATopic(vocab_List);
+                        topic = pickATopic(vocab_List, myScanner);
                         if (topic != 0) {
+                            // find the Vocab object to add before
                             Vocab vocabReference = vocab_List.find(topic);
-                            Vocab newVocab = enterATopic(vocab_List);
+                            Vocab newVocab = enterATopic(vocab_List, myScanner);
                             vocab_List.addBefore(vocabReference, newVocab);
                             newVocab.sortWords();
                             vocab_List.display(newVocab.getTopic());
                         }
                     }
                     break;
+
+                // insert a new topic after another one
                 case 3:
+                    // if vocab_list is empty, add the new topic at head
                     if (vocab_List.getCount() == 0) {
-                        Vocab newVocab = enterATopic(vocab_List);
+                        Vocab newVocab = enterATopic(vocab_List, myScanner);
                         vocab_List.addAtHead(newVocab);
                         vocab_List.getVocab().sortWords();
                         vocab_List.display(newVocab.getTopic());
                     } else {
-                        topic = pickATopic(vocab_List);
+                        topic = pickATopic(vocab_List, myScanner);
                         if (topic != 0) {
+                            // find the Vocab object to add after
                             Vocab vocabReference = vocab_List.find(topic);
-                            Vocab newVocab = enterATopic(vocab_List);
+                            Vocab newVocab = enterATopic(vocab_List, myScanner);
                             vocab_List.addAfter(vocabReference, newVocab);
                             vocab_List.getVocab().sortWords();
                             vocab_List.display(newVocab.getTopic());
                         }
                     }
                     break;
+
+                // remove a topic
                 case 4:
-                    topic = pickATopic(vocab_List);
+                    topic = pickATopic(vocab_List, myScanner);
                     if (topic != 0) {
+                        // find the Vocab object to remove
                         Vocab vocabReference = vocab_List.find(topic);
                         vocab_List.remove(vocabReference.getTopic());
                         vocab_List.getVocab().sortWords();
                     }
                     break;
+
+                // modfiy a topic
                 case 5:
-                    topic = pickATopic(vocab_List);
+                    topic = pickATopic(vocab_List, myScanner);
                     if (topic != 0) {
+                        // find the Vocab object to modify
                         Vocab vocabReference = vocab_List.find(topic);
-                        String modifyChoice = modifyTopicsMenu();
+                        String modifyChoice = modifyTopicsMenu(myScanner);
                         switch (modifyChoice) {
+                            // add a word
                             case "a":
                                 System.out.println("Type a word and press Enter, or press Enter to end input.");
                                 String newWord = myScanner.next();
                                 if (!newWord.isEmpty()) {
+                                    myScanner.nextLine();
                                     vocabReference.addWord(newWord);
                                 }
                                 break;
+
+                            // remove a word
                             case "r":
                                 System.out.println("Enter a word:");
                                 String wordToRemove = myScanner.next();
                                 vocabReference.removeWord(wordToRemove);
                                 break;
+
+                            // change a word
                             case "c":
                                 System.out.println("Enter the word to change: ");
                                 String oldWord = myScanner.next();
-                                System.out.println("Enter the new word: ");
+                                System.out.println("Enter the new word and press Enter, or press Enter to end input.");
                                 String wordToChange = myScanner.next();
-                                vocabReference.modifyWord(oldWord, wordToChange);
+                                if (!wordToChange.isEmpty()) {
+                                    myScanner.nextLine();
+                                    vocabReference.modifyWord(oldWord, wordToChange);
+                                }
                                 break;
+
+                            // exit
                             case "0":
                                 break;
                         }
                         vocab_List.getVocab().sortWords();
                     }
                     break;
+
+                // search topics for a word
                 case 6:
                     System.out.println("Enter a word:");
                     String wordToFind = myScanner.next();
@@ -106,17 +148,22 @@ public class Driver {
                         System.out.println("No existing topics contain the word.");
                     }
                     break;
+
+                // load from a file
                 case 7:
                     System.out.println("Enter the name of the input file:");
                     String inputFile = myScanner.next();
                     myScanner.nextLine();
-                    vocab_List = loadFile(inputFile, vocab_List);
+                    vocab_List = loadFile(inputFile, vocab_List, myScanner);
                     break;
+
+                // show all words starting with a given letter
                 case 8:
                     ArrayList<String> wordsStartingWith = new ArrayList<String>();
                     System.out.println("Enter a letter:");
                     String letter = myScanner.next();
                     wordsStartingWith = vocab_List.startingWith(letter);
+                    // sorting the arraylist alphabetically with bubble sort
                     for (int i = 0; i < wordsStartingWith.size() - 1; i++) {
                         for (int j = 0; j < wordsStartingWith.size() - i - 1; j++) {
                             if (wordsStartingWith.get(j).compareTo(wordsStartingWith.get(j + 1)) > 0) {
@@ -130,6 +177,8 @@ public class Driver {
                         System.out.println(word);
                     }
                     break;
+
+                // save to file
                 case 9:
                     System.out.println("Enter the name of the output file (format input_topics_words.txt): ");
                     String file = myScanner.next();
@@ -142,6 +191,9 @@ public class Driver {
 
     }
 
+    /**
+     * Displays the main menu
+     */
     public static void displayMenu() {
         System.out.println("-----------------------------");
         System.out.println("  Vocabulary Control Center");
@@ -160,18 +212,26 @@ public class Driver {
         System.out.print("Enter Your Choice: ");
     }
 
-    public static DoublyLinkedList loadFile(String file, DoublyLinkedList vocab_List) {
-        Scanner sc = null;
+    /**
+     * Reads from an input file and stores the Vocab object into a DoublyLinkedList
+     * @param file A string representing the name of the file
+     * @param vocab_list A DoublyLinkedList containing all vocabs
+     * @param myScanner A scanner for the user's input
+     */
+    public static DoublyLinkedList loadFile(String file, DoublyLinkedList vocab_List, Scanner myScanner) {
         String line = "";
         String topic = "";
         SinglyLinkedList words = null;
 
         try {
-            sc = new Scanner(new FileInputStream(file));
-            while (sc.hasNextLine()) {
-                line = sc.nextLine().trim();
+            myScanner = new Scanner(new FileInputStream(file));
+            while (myScanner.hasNextLine()) {
+                line = myScanner.nextLine().trim();
+
+                // if the line starts with '#', a new topic is found
                 if (line.startsWith("#")) {
 
+                    // create a new Vocab object and add it at the end of the DoublyLinkedList
                     if (topic != null && words != null) {
                         Vocab vocab = new Vocab(topic, words);
                         vocab_List.addAtTail(vocab);
@@ -180,7 +240,9 @@ public class Driver {
                     topic = line.substring(1);
                     words = new SinglyLinkedList();
                 } else if (!line.equals("")) {
-                    words.addAtEnd(line);
+                    // add the word to the SinglyLinkedList
+                    words.addFromFile(line);
+                    words.sort();
                 }
             }
 
@@ -191,16 +253,19 @@ public class Driver {
             }
 
             System.out.println("Done loading");
-            sc.close();
         } catch (FileNotFoundException e) {
             System.out.println("File could not be opened.");
         }
         return vocab_List;
     }
 
-    public static int pickATopic(DoublyLinkedList vocab_list) {
-        Scanner sc = new Scanner(System.in);
-
+    /**
+     * Displays all topics from the DoublyLinkedList
+     * @param vocab_list A DoublyLinkedList containing all vocabs
+     * @param myScanner A scanner for the user's input
+     * @return An integer representing the topic selected by the user
+     */
+    public static int pickATopic(DoublyLinkedList vocab_list, Scanner myScanner) {
         System.out.println("-----------------------------");
         System.out.println("        Pick a topic");
         System.out.println("-----------------------------");
@@ -208,20 +273,34 @@ public class Driver {
         System.out.println(" 0 Exit");
         System.out.println("-----------------------------");
         System.out.print("Enter Your Choice: ");
-        int topicChoice = sc.nextInt();
+
+        int topicChoice = myScanner.nextInt();
+
+        // validate the user's input
+        while (topicChoice < 0 || topicChoice > vocab_list.getCount()) {
+            System.out.println("Invalid choice. Please try again.");
+            System.out.print("Enter Your Choice: ");
+            topicChoice = myScanner.nextInt();
+        }
         return topicChoice;
     }
 
-    public static Vocab enterATopic(DoublyLinkedList vocab_List) {
-        Scanner sc = new Scanner(System.in);
+    /**
+     * Creates a new Vocab object
+     * @param vocab_list A DoublyLinkedList containing all vocabs
+     * @param myScanner A scanner for the user's input
+     * @return A Vocab object created by the user
+     */
+    public static Vocab enterATopic(DoublyLinkedList vocab_List, Scanner myScanner) {
         System.out.print("Enter a topic: ");
-        String topic = sc.next();
-        sc.nextLine();
+        String topic = myScanner.next();
+        myScanner.nextLine();
         Vocab newVocab = new Vocab(topic);
         String word = "";
         System.out.println("Enter a word - to quit press Enter:");
+
         do {
-            word = sc.nextLine();
+            word = myScanner.nextLine();
             if (!word.isEmpty()) {
                 newVocab.addWord(word);
             }
@@ -230,9 +309,12 @@ public class Driver {
         return newVocab;
     }
 
-    public static String modifyTopicsMenu() {
-        Scanner sc = new Scanner(System.in);
-
+    /**
+     * Displays the Modify Topics Menu
+     * @param myScanner A scanner for the user's input
+     * @return A string representing the option selected by the user
+     */
+    public static String modifyTopicsMenu(Scanner myScanner) {
         System.out.println("-----------------------------");
         System.out.println("    Modify Topics Menu");
         System.out.println("-----------------------------");
@@ -242,8 +324,19 @@ public class Driver {
         System.out.println(" 0 Exit");
         System.out.println("-----------------------------");
         System.out.print("Enter Your Choice: ");
-        String modifyChoice = sc.next();
-        sc.nextLine();
+
+        String modifyChoice = myScanner.next();
+
+        // validate the user's input
+        while (!(modifyChoice.toLowerCase().equals("a") ||
+                modifyChoice.toLowerCase().equals("r") ||
+                modifyChoice.toLowerCase().equals("c") ||
+                modifyChoice.equals("0"))) {
+            System.out.println("Invalid choice. Please try again.");
+            System.out.print("Enter Your Choice: ");
+            modifyChoice = myScanner.next();
+        }
+        myScanner.nextLine();
         return modifyChoice;
     }
 
