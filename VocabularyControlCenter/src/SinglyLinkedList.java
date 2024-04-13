@@ -36,7 +36,7 @@ public class SinglyLinkedList {
 
     /**
      * Setter method to set the head of the list
-     * @param head
+     * @param head the head of the list
      */
     public void setHead(Node head) {
         this.head = head;
@@ -52,7 +52,7 @@ public class SinglyLinkedList {
 
     /**
      * Getter method to get the number of words in the list
-     * @return
+     * @return int count
      */
     public int size() {
         return count;
@@ -113,7 +113,7 @@ public class SinglyLinkedList {
 
     /**
      * Method to add a word to the end of the list
-     * @param newWord
+     * @param newWord the word to add to the list
      */
     public void addAtEnd(String newWord) {
         if (head == null) {
@@ -211,8 +211,8 @@ public class SinglyLinkedList {
             int wordNum = 1; //counter to display the word number in the list
             while (position != null) {
                 //Display 4 words per row as formatted in the sample output
-                System.out.printf("%2d", wordNum++);
-                System.out.printf("%-20s", ": " + position.word);
+                System.out.printf("%3d", wordNum++);
+                System.out.printf("%-25s", ": " + position.word);
                 position = position.next;
                 columnCount++;
                 //If 4 words have been displayed or the end of the list is reached, move to the next line
@@ -253,9 +253,10 @@ public class SinglyLinkedList {
         SinglyLinkedList copy = new SinglyLinkedList();
         Node position = head;
         while (position != null) {
-            copy.addAtEnd(position.word);
+            copy.addFromFile(position.word);
             position = position.next;
         }
+        copy.sort();
         return copy;
     }
 

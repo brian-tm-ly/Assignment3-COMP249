@@ -33,7 +33,7 @@ public class DoublyLinkedList {
 
     /**
      * Getter method to get the head of the list
-     * @return
+     * @return the head of the list
      */
     public Node getHead() {
         return head;
@@ -41,7 +41,7 @@ public class DoublyLinkedList {
 
     /**
      * Getter method to get the tail of the list
-     * @return
+     * @return the tail of the list
      */
     public Node getTail() {
         return tail;
@@ -49,7 +49,7 @@ public class DoublyLinkedList {
 
     /**
      * Getter method to get number of Vocab objects of the list
-     * @return
+     * @return the number of Vocab objects
      */
     public int getCount() {
         return this.count;

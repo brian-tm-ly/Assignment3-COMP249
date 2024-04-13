@@ -28,7 +28,7 @@ public class Vocab {
 
     /**
      * Constructor to create a vocab object with a topic and an empty list of words
-     * @param topic
+     * @param topic the topic of the vocab object
      */
     public Vocab(String topic) {
         this.topic = topic;
@@ -50,7 +50,7 @@ public class Vocab {
      * @return SinglyLinkedList words
      */
     public SinglyLinkedList getWords() {
-        return this.words;
+        return this.words.clone();
     }
 
     /**
@@ -63,7 +63,7 @@ public class Vocab {
 
     /**
      * Setter method to set the topic of the vocab object
-     * @param topic
+     * @param topic the topic of the vocab object
      */
     public void setTopic(String topic) {
         this.topic = topic;
@@ -71,7 +71,7 @@ public class Vocab {
 
     /**
      * Method to add a word to the list of words in the vocab object
-     * @param newWord
+     * @param newWord the word to be added
      */
     public void addWord(String newWord) {
         words.addAtHead(newWord);
@@ -79,7 +79,7 @@ public class Vocab {
 
     /**
      * Method to remove a word from the list of words in the vocab object
-     * @param wordToRemove
+     * @param wordToRemove the word to be removed
      */
     public void removeWord(String wordToRemove) {
         words.remove(wordToRemove);
