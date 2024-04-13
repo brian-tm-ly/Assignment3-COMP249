@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"DoublyLinkedList"},{"p":"<Unnamed>","l":"Driver"},{"p":"<Unnamed>","l":"SinglyLinkedList"},{"p":"<Unnamed>","l":"Vocab"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"VocabularyControlCenter","l":"DoublyLinkedList"},{"p":"VocabularyControlCenter","l":"Driver"},{"p":"VocabularyControlCenter","l":"SinglyLinkedList"},{"p":"VocabularyControlCenter","l":"Vocab"}];updateSearchResults();

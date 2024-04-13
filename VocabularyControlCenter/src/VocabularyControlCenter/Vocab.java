@@ -1,3 +1,4 @@
+package VocabularyControlCenter;
 //Brian Ly (40028072), Valerie Nguyen (40284261)
 
 //COMP249
