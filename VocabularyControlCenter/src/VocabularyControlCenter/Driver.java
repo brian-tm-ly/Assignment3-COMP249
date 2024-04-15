@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 /**
  * Driver class to run the Vocabulary Control Center program
+ * 
  * @author Brian, Valerie
  * @version 1.0
  * @see DoublyLinkedList
@@ -22,6 +23,7 @@ public class Driver {
 
     /**
      * Main method to run the Vocabulary Control Center program
+     * 
      * @param args An array of strings representing the command line arguments
      */
     public static void main(String[] args) {
@@ -53,7 +55,7 @@ public class Driver {
                     }
                     break;
 
-                // insert a new topic before another one    
+                // insert a new topic before another one
                 case 2:
                     // if vocab_list is empty, add the new topic at head
                     if (vocab_list.getCount() == 0) {
@@ -102,7 +104,7 @@ public class Driver {
                         // find the Vocab object to remove
                         Vocab vocabReference = vocab_list.find(topic);
                         vocab_list.remove(vocabReference.getTopic());
-                        vocab_list.getVocab().sortWords();
+                        //vocab_list.getVocab().sortWords();
                     }
                     break;
 
@@ -228,9 +230,10 @@ public class Driver {
 
     /**
      * Reads from an input file and stores the Vocab object into a DoublyLinkedList
-     * @param file A string representing the name of the file
+     * 
+     * @param file       A string representing the name of the file
      * @param vocab_list A DoublyLinkedList containing all vocabs
-     * @param myScanner A scanner for the user's input
+     * @param myScanner  A scanner for the user's input
      */
     public static DoublyLinkedList loadFile(String file, DoublyLinkedList vocab_list, Scanner myScanner) {
         String line = "";
@@ -275,8 +278,9 @@ public class Driver {
 
     /**
      * Displays all topics from the DoublyLinkedList
+     * 
      * @param vocab_list A DoublyLinkedList containing all vocabs
-     * @param myScanner A scanner for the user's input
+     * @param myScanner  A scanner for the user's input
      * @return An integer representing the topic selected by the user
      */
     public static int pickATopic(DoublyLinkedList vocab_list, Scanner myScanner) {
@@ -301,8 +305,9 @@ public class Driver {
 
     /**
      * Creates a new Vocab object
+     * 
      * @param vocab_list A DoublyLinkedList containing all vocabs
-     * @param myScanner A scanner for the user's input
+     * @param myScanner  A scanner for the user's input
      * @return A Vocab object created by the user
      */
     public static Vocab enterATopic(DoublyLinkedList vocab_list, Scanner myScanner) {
@@ -325,6 +330,7 @@ public class Driver {
 
     /**
      * Displays the Modify Topics Menu
+     * 
      * @param myScanner A scanner for the user's input
      * @return A string representing the option selected by the user
      */

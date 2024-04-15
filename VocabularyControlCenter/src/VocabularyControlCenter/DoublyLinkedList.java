@@ -61,7 +61,8 @@ public class DoublyLinkedList {
      * @return Vocab object of the head
      */
     public Vocab getVocab() {
-        return head.vocab;
+            return head.vocab;
+       
     }
 
     /**
@@ -277,30 +278,67 @@ public class DoublyLinkedList {
     }
 
     /**
+     * Method to remove the first Vocab object
+     */
+    public void removeHead() {
+        if (head == null){
+            return;
+        } else if (head == tail){
+            head = null;
+            tail = null;
+            count--;
+        } else {
+            head = head.next;
+            head.prev = null; 
+            count--;
+        }
+        
+    }
+
+    /**
+     * Method to remove the last Vocab object
+     */
+    public void removeTail() {
+        if (tail == null) {
+            return;
+        } else if (head == tail) {
+            head = null;
+            tail = null;
+            count--; 
+        } else {
+            tail = tail.prev;
+            tail.next = null;
+            count--;
+        }
+    }
+    
+    
+    /**
      * Method to remove a Vocab object from the list
      * @param topicToRemove the topic of the Vocab object to remove
      */
     public void remove(String topicToRemove) {
         if (head == null) {
             return;
+        } else if (head.vocab.getTopic().equals(topicToRemove)){
+            removeHead();
+        } else if (tail.vocab.getTopic().equals(topicToRemove)) {
+            removeTail();
         } else {
             Node position = head;
             while (position != null && !(position.vocab.getTopic().equals(topicToRemove))) {
                 position = position.next; // move to the next node
             }
 
-            if (position == head) { // if the topic to be removed is the head
-                head = position.next;
-            }
-
-            if (position.prev != null) {
-                // set the previous node's next node to the current node's next node
+            if (position != null){
                 position.prev.next = position.next;
-            }
-
-            if (position.next != null) {
-                // set the next node's previous node to the current node's previous node
                 position.next.prev = position.prev;
+
+                //Data sanitization
+                position.prev =null;
+                position.next = null;
+                count--;
+
             }
 
             count--;
