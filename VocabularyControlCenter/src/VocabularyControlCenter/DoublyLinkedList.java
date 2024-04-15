@@ -135,19 +135,20 @@ public class DoublyLinkedList {
      * @param word the word to search for
      * @return the Vocab object with the specified word
      */
-    public Vocab findWord(String word) {
+    public ArrayList<Vocab> findWord(String word) {
+        ArrayList<Vocab> vocabs = new ArrayList<>();
         Node position = head;
         // While loop to traverse the list until the word is found
         while (position != null) {
             // Get the words list of the vocab object
             SinglyLinkedList words = position.vocab.getWords();
             for (int i = 0; i < words.size(); i++) {
-                if (words.getWordAt(i).equals(word)) // if the word is found
-                    return position.vocab;
+                if (words.getWordAt(i).equals(word) && !(vocabs.contains(position.vocab))) // if the word is found
+                    vocabs.add(position.vocab);
             }
             position = position.next;
         }
-        return null;
+        return vocabs;
     }
 
     /**

@@ -104,7 +104,6 @@ public class Driver {
                         // find the Vocab object to remove
                         Vocab vocabReference = vocab_list.find(topic);
                         vocab_list.remove(vocabReference.getTopic());
-                        //vocab_list.getVocab().sortWords();
                     }
                     break;
 
@@ -157,9 +156,13 @@ public class Driver {
                 case 6:
                     System.out.println("Enter a word:");
                     String wordToFind = myScanner.next();
-                    Vocab vocabTarget = vocab_list.findWord(wordToFind);
-                    if (vocabTarget != null) {
-                        System.out.println(wordToFind + " is listed in the topic: " + vocabTarget.getTopic());
+                    ArrayList<Vocab> vocabTargets = vocab_list.findWord(wordToFind);
+                    String topics ="\n";
+                    if (vocabTargets.size() !=0) {
+                        for (Vocab vocab : vocabTargets) {
+                            topics += vocab.getTopic() + "\n";
+                        }
+                        System.out.println(wordToFind + " is listed in the topic: " + topics);
                     } else {
                         System.out.println("No existing topics contain the word.");
                     }
