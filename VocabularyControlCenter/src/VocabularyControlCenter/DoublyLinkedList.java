@@ -61,8 +61,8 @@ public class DoublyLinkedList {
      * @return Vocab object of the head
      */
     public Vocab getVocab() {
-            return head.vocab;
-       
+        return head.vocab;
+
     }
 
     /**
@@ -133,7 +133,7 @@ public class DoublyLinkedList {
     /**
      * Method to find a Vocab object with a specified topic
      * @param word the word to search for
-     * @return the Vocab object with the specified word
+     * @return the ArrayList of Vocab objects with the specified word
      */
     public ArrayList<Vocab> findWord(String word) {
         ArrayList<Vocab> vocabs = new ArrayList<>();
@@ -282,18 +282,18 @@ public class DoublyLinkedList {
      * Method to remove the first Vocab object
      */
     public void removeHead() {
-        if (head == null){
+        if (head == null) {
             return;
-        } else if (head == tail){
+        } else if (head == tail) {
             head = null;
             tail = null;
             count--;
         } else {
             head = head.next;
-            head.prev = null; 
+            head.prev = null;
             count--;
         }
-        
+
     }
 
     /**
@@ -305,15 +305,14 @@ public class DoublyLinkedList {
         } else if (head == tail) {
             head = null;
             tail = null;
-            count--; 
+            count--;
         } else {
             tail = tail.prev;
             tail.next = null;
             count--;
         }
     }
-    
-    
+
     /**
      * Method to remove a Vocab object from the list
      * @param topicToRemove the topic of the Vocab object to remove
@@ -321,7 +320,7 @@ public class DoublyLinkedList {
     public void remove(String topicToRemove) {
         if (head == null) {
             return;
-        } else if (head.vocab.getTopic().equals(topicToRemove)){
+        } else if (head.vocab.getTopic().equals(topicToRemove)) {
             removeHead();
         } else if (tail.vocab.getTopic().equals(topicToRemove)) {
             removeTail();
@@ -331,12 +330,12 @@ public class DoublyLinkedList {
                 position = position.next; // move to the next node
             }
 
-            if (position != null){
+            if (position != null) {
                 position.prev.next = position.next;
                 position.next.prev = position.prev;
 
                 //Data sanitization
-                position.prev =null;
+                position.prev = null;
                 position.next = null;
                 count--;
 
