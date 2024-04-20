@@ -232,7 +232,6 @@ public class Driver {
 
     /**
      * Reads from an input file and stores the Vocab object into a DoublyLinkedList
-     * 
      * @param file       A string representing the name of the file
      * @param vocab_list A DoublyLinkedList containing all vocabs
      * @param myScanner  A scanner for the user's input
@@ -253,7 +252,6 @@ public class Driver {
 
                     if (topic != null && words != null) {
                         existingVocab = vocab_list.findVocabByTopic(topic); // check if the topic already exists
-                        // System.out.println("Existing Vocab: " + existingVocab);
                         //if the topic does not exist, add the new vocab
                         if (existingVocab == null) {
                             //  create a new Vocab object and add it at the end of the DoublyLinkedList
@@ -264,14 +262,10 @@ public class Driver {
                     topic = line.substring(1); // get the topic
                     words = new SinglyLinkedList();
                     existingVocab = vocab_list.findVocabByTopic(topic); // check if the topic already exists
-                    // if (existingVocab != null)
-                    //     System.out.println(existingVocab.getTopic());
-                    // else
-                    //     System.out.println("null");
                 } else if (!line.equals("")) {
                     //add the word to the existing vocab
                     if (existingVocab != null) {
-                        existingVocab.getWords().addFromFile(line);
+                        existingVocab.getWords().addAtHead(line);
                         existingVocab.getWords().sort();
                     } else {
                         // add the word to the SinglyLinkedList

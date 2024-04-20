@@ -275,23 +275,42 @@ public class DoublyLinkedList {
                 }
                 position = position.next;
             }
-            // Check if the topic of the new vocab is the same as the tail
-            if (position != null && position.vocab.getTopic().equals(vocabReference.getTopic())) {
-                if (position.next == null) { // if the reference node is the tail
-                    addAtTail(newVocab); // add the new vocab to the tail
-
+            //Check if position is not null
+            if (position != null) {
+                //Create a new node with the new vocab object
+                Node newNode = new Node(newVocab, null, null);
+                //Set the previous node of the new node to the reference node
+                newNode.next = position.next;
+                //Set the next node of the new node to the next node of the reference node
+                newNode.prev = position;
+                //if the next node of the reference node is not null
+                if (position.next != null) {
+                    position.next.prev = newNode; //Set the previous node of the next node of the reference node to the new node
                 } else {
-                    //Create a new node,
-                    //set the previous node of the new node to the current node's next node
-                    //and the next node to the current node
-                    Node newNode = new Node(newVocab, position.next, position);
-                    //Set the previous node of the current node's next node to the new node
-                    position.next.prev = newNode;
-                    //Set the next node of the current node to the new node
-                    position.next = newNode;
-                    count++;
+                    // if the reference node is the tail
+                    tail = newNode;
                 }
+                position.next = newNode;
+                count++;
             }
+
+            // // Check if the topic of the new vocab is the same as the tail
+            // if (position != null && position.vocab.getTopic().equals(vocabReference.getTopic())) {
+            //     if (position.next == null) { // if the reference node is the tail
+            //         addAtTail(newVocab); // add the new vocab to the tail
+
+            //     } else {
+            //         //Create a new node,
+            //         //set the previous node of the new node to the current node's next node
+            //         //and the next node to the current node
+            //         Node newNode = new Node(newVocab, position.next, position);
+            //         //Set the previous node of the current node's next node to the new node
+            //         position.next.prev = newNode;
+            //         //Set the next node of the current node to the new node
+            //         position.next = newNode;
+            //         count++;
+            //     }
+            // }
         }
     }
 
@@ -377,8 +396,10 @@ public class DoublyLinkedList {
             while (position != null && !(position.vocab.getTopic().equals(topicToDisplay))) {
                 position = position.next;
             }
-            System.out.print(position.vocab);
-            position.vocab.getWords().display(); // display the words list of the vocab object
+            if (position != null) {
+                System.out.print(position.vocab);
+                position.vocab.getWords().display(); // display the words list of the vocab object
+            }
         }
     }
 

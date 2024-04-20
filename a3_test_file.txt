@@ -1,0 +1,14 @@
+#Fruits
+apple
+banana
+mango
+
+#Songs
+ditto
+run
+
+#Colours
+blue
+green
+red
+
