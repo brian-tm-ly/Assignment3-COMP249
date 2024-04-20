@@ -232,7 +232,7 @@ public class Driver {
 
     /**
      * Reads from an input file and stores the Vocab object into a DoublyLinkedList
-     * @param file       A string representing the name of the file
+     * @param file A string representing the name of the file
      * @param vocab_list A DoublyLinkedList containing all vocabs
      * @param myScanner  A scanner for the user's input
      */
@@ -294,7 +294,6 @@ public class Driver {
 
     /**
      * Displays all topics from the DoublyLinkedList
-     * 
      * @param vocab_list A DoublyLinkedList containing all vocabs
      * @param myScanner  A scanner for the user's input
      * @return An integer representing the topic selected by the user
@@ -321,7 +320,6 @@ public class Driver {
 
     /**
      * Creates a new Vocab object
-     * 
      * @param vocab_list A DoublyLinkedList containing all vocabs
      * @param myScanner  A scanner for the user's input
      * @return A Vocab object created by the user
@@ -346,7 +344,6 @@ public class Driver {
 
     /**
      * Displays the Modify Topics Menu
-     * 
      * @param myScanner A scanner for the user's input
      * @return A string representing the option selected by the user
      */
