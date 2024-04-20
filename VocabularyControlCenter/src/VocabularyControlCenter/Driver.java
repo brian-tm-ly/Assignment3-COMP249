@@ -118,9 +118,8 @@ public class Driver {
                             // add a word
                             case "a":
                                 System.out.println("Type a word and press Enter, or press Enter to end input.");
-                                String newWord = myScanner.next();
+                                String newWord = myScanner.nextLine();
                                 if (!newWord.isEmpty()) {
-                                    myScanner.nextLine();
                                     vocabReference.addWord(newWord);
                                 }
                                 break;
@@ -136,10 +135,10 @@ public class Driver {
                             case "c":
                                 System.out.println("Enter the word to change: ");
                                 String oldWord = myScanner.next();
+                                myScanner.nextLine();
                                 System.out.println("Enter the new word and press Enter, or press Enter to end input.");
-                                String wordToChange = myScanner.next();
+                                String wordToChange = myScanner.nextLine();
                                 if (!wordToChange.isEmpty()) {
-                                    myScanner.nextLine();
                                     vocabReference.modifyWord(oldWord, wordToChange);
                                 }
                                 break;
@@ -157,8 +156,8 @@ public class Driver {
                     System.out.println("Enter a word:");
                     String wordToFind = myScanner.next();
                     ArrayList<Vocab> vocabTargets = vocab_list.findWord(wordToFind);
-                    String topics ="\n";
-                    if (vocabTargets.size() !=0) {
+                    String topics = "\n";
+                    if (vocabTargets.size() != 0) {
                         for (Vocab vocab : vocabTargets) {
                             topics += vocab.getTopic() + "\n";
                         }
@@ -242,6 +241,7 @@ public class Driver {
         String line = "";
         String topic = "";
         SinglyLinkedList words = null;
+        Vocab existingVocab = null;
 
         try {
             myScanner = new Scanner(new FileInputStream(file));
@@ -251,25 +251,44 @@ public class Driver {
                 // if the line starts with '#', a new topic is found
                 if (line.startsWith("#")) {
 
-                    // create a new Vocab object and add it at the end of the DoublyLinkedList
                     if (topic != null && words != null) {
-                        Vocab vocab = new Vocab(topic, words);
-                        vocab_list.addAtTail(vocab);
+                        existingVocab = vocab_list.findVocabByTopic(topic); // check if the topic already exists
+                        // System.out.println("Existing Vocab: " + existingVocab);
+                        //if the topic does not exist, add the new vocab
+                        if (existingVocab == null) {
+                            //  create a new Vocab object and add it at the end of the DoublyLinkedList
+                            Vocab vocab = new Vocab(topic, words);
+                            vocab_list.addAtTail(vocab);
+                        }
+                    }
+                    topic = line.substring(1); // get the topic
+                    words = new SinglyLinkedList();
+                    existingVocab = vocab_list.findVocabByTopic(topic); // check if the topic already exists
+                    // if (existingVocab != null)
+                    //     System.out.println(existingVocab.getTopic());
+                    // else
+                    //     System.out.println("null");
+                } else if (!line.equals("")) {
+                    //add the word to the existing vocab
+                    if (existingVocab != null) {
+                        existingVocab.getWords().addFromFile(line);
+                        existingVocab.getWords().sort();
+                    } else {
+                        // add the word to the SinglyLinkedList
+                        words.addFromFile(line);
+                        words.sort();
                     }
 
-                    topic = line.substring(1);
-                    words = new SinglyLinkedList();
-                } else if (!line.equals("")) {
-                    // add the word to the SinglyLinkedList
-                    words.addFromFile(line);
-                    words.sort();
                 }
             }
 
             // add the last vocab
-            if (topic != null && words != null) {
-                Vocab vocab = new Vocab(topic, words);
-                vocab_list.addAtTail(vocab);
+            if (existingVocab == null) {
+                if (topic != null && words != null) {
+                    Vocab vocab = new Vocab(topic, words);
+                    vocab_list.addAtTail(vocab);
+                }
+
             }
 
             System.out.println("Done loading");

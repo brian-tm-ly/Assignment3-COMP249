@@ -131,6 +131,23 @@ public class DoublyLinkedList {
     }
 
     /**
+    * Method to find a Vocab object with a specified topic
+    * @param topic the topic of the Vocab object to find
+    * @return the Vocab object with the specified topic, or null if no such Vocab exists
+    */
+    public Vocab findVocabByTopic(String topic) {
+        Node position = head;
+        // While loop to traverse the list until the specified topic is found
+        while (position != null) {
+            if (position.vocab.getTopic().equals(topic)) {
+                return position.vocab; // Return the Vocab object
+            }
+            position = position.next;
+        }
+        return null; // Return null if no Vocab with the specified topic is found
+    }
+
+    /**
      * Method to find a Vocab object with a specified topic
      * @param word the word to search for
      * @return the ArrayList of Vocab objects with the specified word

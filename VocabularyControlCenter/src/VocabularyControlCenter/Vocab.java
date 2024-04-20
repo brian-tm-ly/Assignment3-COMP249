@@ -43,7 +43,7 @@ public class Vocab {
      */
     public Vocab(String topic, SinglyLinkedList words) {
         this.topic = topic;
-        this.words = words.clone(); //create a deep copy of the words list
+        this.words = words; //create a deep copy of the words list
     }
 
     /**
@@ -51,7 +51,7 @@ public class Vocab {
      * @return SinglyLinkedList words
      */
     public SinglyLinkedList getWords() {
-        return this.words.clone();
+        return this.words;
     }
 
     /**
